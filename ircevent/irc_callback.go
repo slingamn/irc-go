@@ -720,7 +720,7 @@ func unescapeISupportValue(in string) (out string) {
 	for i := 0; i < len(in); {
 		if in[i] == '\\' && i+3 < len(in) && in[i+1] == 'x' {
 			hex := in[i+2 : i+4]
-			if octet, err := strconv.ParseInt(hex, 16, 8); err == nil {
+			if octet, err := strconv.ParseUint(hex, 16, 8); err == nil {
 				buf.WriteByte(byte(octet))
 				i += 4
 				continue

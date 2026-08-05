@@ -35,4 +35,5 @@ func TestUnescapeIsupport(t *testing.T) {
 	assertEqual(unescapeISupportValue(`a\x20`), "a ")
 	assertEqual(unescapeISupportValue(`a\x20b`), "a b")
 	assertEqual(unescapeISupportValue(`\x20\x20`), "  ")
+	assertEqual(unescapeISupportValue(`\xea\x99\xae`), "ꙮ")
 }
