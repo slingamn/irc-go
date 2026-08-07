@@ -5,13 +5,17 @@ All notable changes to irc-go will be documented in this file.
 
 irc-go v0.7.0 is a new tagged release. It includes enhancements to `ircevent`, our IRC client library. There are no API breaks relative to previous tagged versions.
 
+### Security
+* `ircevent` is now more resilient to malicious `BATCH` responses from servers, including excessively large or deep batches (#118, #122)
+
 ### Added
 * Added `(*ircevent.Connection).MaxMessageLength()` and `FetchUserHost`. `MaxMessageLength` can be used to compute the maximum length of a `PRIVMSG` or `NOTICE` message that can be sent to a target without truncation. By default, the initial invocation of `MaxMessageLength` returns a safe default value until a more accurate measurement can be obtained; `FetchUserHost` can be enabled to perform this measurement eagerly on each connection, at the cost of sending an additional command. (#114, #123, thanks [@lollipopman](https://github.com/lollipopman)!)
 * Added `(*ircevent.Connection).SendBatch`, `SendBatchWithLabel`, and `GetLabeledResponseForBatch`. These are APIs for sending a compliant [IRCv3 client-initiated batch](https://ircv3.net/specs/extensions/client-batch), for example with the [multiline extension](https://ircv3.net/specs/extensions/multiline). (#106, #119)
 * Added `(*ircevent.Connection).AddRawCallback`, an API for adding callbacks that take in the unparsed IRC line, without filtering on the command. This can be used to implement programmatic debug logs, or catch-all handling of otherwise unhandled commands. (#76, #116, thanks [@jcjordyn130](https://github.com/jcjordyn130)!)
 
-### Security
-* `ircevent` is now more resilient to malicious `BATCH` responses from servers, including excessively large or deep batches (#118, #122)
+### Fixed
+* Fixed cases where even with `SASLOptional` enabled, failure to complete SASL would still be considered a fatal error (#126)
+* Fixed excessively permissive interpretation of ISUPPORT escapes (#126)
 
 ### Changed
 * Shortened the timeout for `GetLabeledResponse` (now approximately 1 minute by default) (#124)
